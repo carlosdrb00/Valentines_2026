@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Heart, Gift } from 'lucide-react';
+import miCaraImage from '../images/Mi_cara.jpeg';
 
 const GalleryPage: React.FC = () => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const GalleryPage: React.FC = () => {
   const photos = [
     {
       id: 1,
-      src: "images/Mi_cara.jpeg",
+      src: miCaraImage,
       alt: "Special portrait",
       caption: "Simply You ✨",
       description: "A very special moment"
