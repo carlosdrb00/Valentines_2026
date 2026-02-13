@@ -57,6 +57,16 @@
       .animate-spin-slow {
         animation: spin-slow 8s linear infinite;
       }
+      /* Gift interaction styles */
+      .gift-glow { box-shadow: 0 0 30px rgba(244,63,94,0.5), 0 0 60px rgba(244,63,94,0.12) inset; animation: giftPulse 800ms ease-in-out infinite alternate; }
+      @keyframes giftPulse { from { transform: rotate(-3deg) scale(1); } to { transform: rotate(-3deg) scale(1.02); } }
+      .particle { position:fixed; width:10px; height:10px; border-radius:50%; pointer-events:none; z-index:60; transform:translate(-50%,-50%); }
+      .gallery-modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.6); z-index:70; }
+      .gallery-modal .box { background:white; padding:1rem; border-radius:0.75rem; max-width:720px; width:90%; position:relative; }
+      .gallery-modal img { width:100%; height:280px; object-fit:cover; border-radius:0.5rem; display:block; }
+      @media (min-width:768px) { .gallery-modal img { height:420px; } }
+      .gallery-modal .close { position:absolute; top:8px; right:8px; background:rgba(0,0,0,0.6); color:white; width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:999px; cursor:pointer; }
+      .gallery-modal .caption { margin-top:0.5rem; font-weight:700; color:#0b3b6b; }
     </style>
     <script>
       tailwind.config = {
@@ -95,7 +105,7 @@
 
           <!-- Header -->
           <div class="text-center space-y-6 max-w-3xl">
-            <div class="inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-lg mb-2 -rotate-3">
+            <div id="gift" class="inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-lg mb-2 -rotate-3 cursor-pointer" style="pointer-events:auto; z-index:20;">
               <svg class="w-10 h-10 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
             </div>
             <h2 class="text-4xl md:text-6xl font-black text-gray-900 leading-tight">
@@ -186,6 +196,64 @@
         heart.style.animationDuration = (12 + (i % 7) * 2) + 's';
         container.appendChild(heart);
       }
+
+      // Gift interaction: particles, glow and modal with sixth.jpeg
+      (function(){
+        const gift = document.getElementById('gift');
+        if (!gift) return;
+        let state = 0; // 0 initial, 1 hearts emitted, 2 modal shown
+
+        function spawnParticles(n){
+          const rect = gift.getBoundingClientRect();
+          const cx = rect.left + rect.width/2;
+          const cy = rect.top + rect.height/2;
+          for (let i=0;i<n;i++){
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const color = ['#fb7185','#f43f5e','#fda4af','#ffb6c1'][Math.floor(Math.random()*4)];
+            p.style.background = color;
+            p.style.left = cx + 'px';
+            p.style.top = cy + 'px';
+            document.body.appendChild(p);
+            // animate
+            setTimeout(()=>{
+              const angle = Math.random()*Math.PI*2;
+              const dist = 60 + Math.random()*160;
+              const dx = Math.cos(angle)*dist;
+              const dy = Math.sin(angle)*dist - (Math.random()*40);
+              p.style.transition = 'transform 700ms cubic-bezier(.2,.9,.3,1), opacity 700ms';
+              p.style.transform = `translate(${dx}px, ${dy}px) scale(${0.6+Math.random()*0.9})`;
+              p.style.opacity = '0';
+            }, 20 + Math.random()*120);
+            setTimeout(()=>p.remove(), 900 + Math.random()*400);
+          }
+        }
+
+        function showModal(){
+          const overlay = document.createElement('div');
+          overlay.className = 'gallery-modal';
+          overlay.innerHTML = `
+            <div class="box">
+              <div class="close" title="Cerrar">✕</div>
+              <img src="images/sixth.jpeg" alt="surprise" />
+              <div class="caption">Eres más grande que el Teide <3</div>
+            </div>
+          `;
+          document.body.appendChild(overlay);
+          overlay.querySelector('.close').addEventListener('click', ()=>{ overlay.remove(); });
+        }
+
+        gift.addEventListener('click', ()=>{
+          if (state === 0){
+            spawnParticles(36);
+            gift.classList.add('gift-glow');
+            state = 1;
+          } else {
+            showModal();
+            state = 2;
+          }
+        });
+      })();
     </script>
   </body>
 </html>
