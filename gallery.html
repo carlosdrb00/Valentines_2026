@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Special Surprise</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.8; }
+        90% { opacity: 0.8; }
+        100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+      }
+      .heart-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .heart {
+        position: absolute;
+        bottom: -100px;
+        background: #fb7185;
+        opacity: 0.6;
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+      }
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        border-radius: 50%;
+      }
+      .heart::before { top: -50%; }
+      .heart::after { left: 50%; }
+
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 1s ease-out forwards;
+      }
+      @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      .animate-spin-slow {
+        animation: spin-slow 8s linear infinite;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Nunito', 'sans-serif'],
+            },
+            colors: {
+              rose: {
+                50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3',
+                300: '#fda4af', 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48',
+                900: '#881337',
+              }
+            }
+          },
+        },
+      }
+    </script>
+  </head>
+  <body>
+    <div class="min-h-screen w-full bg-rose-50 flex flex-col items-center justify-center text-gray-800 relative overflow-hidden">
+      <!-- Floating Hearts Background -->
+      <div class="heart-bg" id="hearts-container"></div>
+
+      <div class="w-full max-w-5xl px-4 py-8 z-10">
+        <div class="flex flex-col items-center w-full space-y-12 animate-fade-in">
+          <!-- Back button -->
+          <div class="w-full flex justify-start">
+            <a href="index.html"
+              class="group flex items-center text-rose-600 hover:text-rose-800 font-bold transition-all bg-white px-6 py-3 rounded-full shadow-md hover:shadow-lg active:scale-95 no-underline">
+              <svg class="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Back to Question
+            </a>
+          </div>
+
+          <!-- Header -->
+          <div class="text-center space-y-6 max-w-3xl">
+            <div class="inline-flex items-center justify-center p-4 bg-white rounded-2xl shadow-lg mb-2 -rotate-3">
+              <svg class="w-10 h-10 text-rose-500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            </div>
+            <h2 class="text-4xl md:text-6xl font-black text-gray-900 leading-tight">
+              Your Special <span class="text-rose-600">Surprise</span>
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-600 leading-relaxed font-medium">
+              Since you said yes (or of course!), here's a collection of beautiful moments just for you.
+            </p>
+          </div>
+
+          <!-- Photo Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-10 w-full mt-8 pb-20">
+            <!-- Photo 1 (featured) -->
+            <div class="group relative bg-white p-4 rounded-3xl shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:rotate-[1deg] md:scale-105 ring-4 ring-rose-200">
+              <div class="absolute -top-4 -right-4 bg-rose-500 text-white p-2 rounded-full shadow-lg z-20 animate-bounce">
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+              <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-rose-50 relative">
+                <img src="images/Mi_cara.jpeg" alt="Special portrait" class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110" loading="eager" />
+                <div class="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                  <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <span class="text-white font-black text-2xl block mb-1">Simply You</span>
+                    <span class="text-rose-100 text-sm font-medium">A very special moment</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 text-center">
+                <h3 class="text-rose-600 font-extrabold text-xl mb-1">Simply You</h3>
+                <div class="w-8 h-1 bg-rose-100 mx-auto rounded-full group-hover:w-16 transition-all duration-300"></div>
+              </div>
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="group relative bg-white p-4 rounded-3xl shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:rotate-[1deg]">
+              <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-rose-50 relative">
+                <img src="images/photo2.jpeg" alt="Love and hearts" class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110" loading="eager" />
+                <div class="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                  <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <span class="text-white font-black text-2xl block mb-1">Warmth</span>
+                    <span class="text-rose-100 text-sm font-medium">Captured with love</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 text-center">
+                <h3 class="text-rose-600 font-extrabold text-xl mb-1">Warmth</h3>
+                <div class="w-8 h-1 bg-rose-100 mx-auto rounded-full group-hover:w-16 transition-all duration-300"></div>
+              </div>
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="group relative bg-white p-4 rounded-3xl shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:rotate-[1deg]">
+              <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-rose-50 relative">
+                <img src="images/photo3.jpg" alt="Magic sparkles" class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-110" loading="eager" />
+                <div class="absolute inset-0 bg-gradient-to-t from-rose-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                  <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <span class="text-white font-black text-2xl block mb-1">Magic</span>
+                    <span class="text-rose-100 text-sm font-medium">Sparkles of joy</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-6 text-center">
+                <h3 class="text-rose-600 font-extrabold text-xl mb-1">Magic</h3>
+                <div class="w-8 h-1 bg-rose-100 mx-auto rounded-full group-hover:w-16 transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer sparkle -->
+          <div class="flex flex-col items-center space-y-4 pt-4">
+            <svg class="w-12 h-12 text-rose-300 animate-spin-slow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 3l1.09 2.41L15.5 6.5l-2.41 1.09L12 10l-1.09-2.41L8.5 6.5l2.41-1.09L12 3zM5 12l.7 1.55L7.25 14.25l-1.55.7L5 16.5l-.7-1.55L2.75 14.25l1.55-.7L5 12zM19 12l.7 1.55 1.55.7-1.55.7-.7 1.55-.7-1.55-1.55-.7 1.55-.7.7-1.55z"/></svg>
+            <p class="text-rose-400 font-bold text-lg">You're truly special!</p>
+          </div>
+
+          <div class="h-16"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const container = document.getElementById('hearts-container');
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.style.left = ((i * 7.5) % 100) + '%';
+        heart.style.width = (15 + (i % 5) * 5) + 'px';
+        heart.style.height = (15 + (i % 5) * 5) + 'px';
+        heart.style.animationDelay = (i * 0.8) + 's';
+        heart.style.animationDuration = (12 + (i % 7) * 2) + 's';
+        container.appendChild(heart);
+      }
+    </script>
+  </body>
+</html>
